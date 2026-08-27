@@ -1,0 +1,54 @@
+<div class="row mb-4">
+    <div class="col-md-6 mb-3">
+        <div class="card p-3 shadow-sm">
+            <h5>Thêm Giao Dịch Thủ Công</h5>
+            <form action="/add" method="POST">
+                <div class="row">
+                    <div class="col-6 mb-2">
+                        <label>Loại</label>
+                        <select name="trans_type" class="form-select">
+                            <option value="Chi">Chi tiêu</option>
+                            <option value="Thu">Thu nhập</option>
+                        </select>
+                    </div>
+                    <div class="col-6 mb-2">
+                        <label>Số tiền</label>
+                        <input type="number" name="amount" class="form-control" required placeholder="VNĐ">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 mb-2">
+                        <label>Danh mục</label>
+                        <input type="text" name="category" class="form-control" placeholder="Ăn uống, Tiền nhà..." required>
+                    </div>
+                    <div class="col-6 mb-2">
+                        <label>Hũ chi tiêu</label>
+                        <select name="jar" class="form-select">
+                            {% for jar in jar_settings %}
+                            <option value="{{ jar.jar_name }}">{{ jar.jar_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label>Ghi chú</label>
+                    <input type="text" name="note" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Lưu Giao Dịch</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card p-3 shadow-sm">
+            <h5>Nhập Giao Dịch Từ Excel</h5>
+            <p class="text-muted small">Cột mẫu Excel: <code>Ngày</code>, <code>Loại</code>, <code>Danh mục</code>, <code>Hũ chi tiêu</code>, <code>Số tiền</code>, <code>Ghi chú</code></p>
+            <form action="/import-excel" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <input type="file" name="file" class="form-control" accept=".xlsx, .xls" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Tải Lên File Excel</button>
+            </form>
+        </div>
+    </div>
+</div>

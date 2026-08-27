@@ -1,0 +1,19 @@
+<div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h5 class="m-0">1. Điều Chỉnh Tỷ Lệ (%) Các Hũ Chi Tiêu</h5>
+    </div>
+    <div class="card-body">
+        <form action="/update-jars" method="POST">
+            <div class="row">
+                {% for jar in jar_settings %}
+                <div class="col-md-2 col-6 mb-3">
+                    <label class="form-label fw-bold">{{ jar.jar_name }} (%)</label>
+                    <input type="number" step="0.5" min="0" max="100" name="jar_{{ jar.id }}" value="{{ jar.percentage }}" class="form-control">
+                    <small class="text-muted">Còn: {{ "{:,.0f}".format(jars_balance[jar.jar_name]) }}đ</small>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-warning btn-sm">Cập nhật Tỷ Lệ</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="row text-center mb-4">
+    <div class="col-md-4 mb-2">
+        <div class="card bg-success text-white p-3 shadow-sm">
+            <h5>Tổng Thu Nhập</h5>
+            <h4>{{ "{:,.0f}".format(total_income) }} VNĐ</h4>
+        </div>
+    </div>
+    <div class="col-md-4 mb-2">
+        <div class="card bg-danger text-white p-3 shadow-sm">
+            <h5>Tổng Chi Tiêu</h5>
+            <h4>{{ "{:,.0f}".format(total_expense) }} VNĐ</h4>
+        </div>
+    </div>
+    <div class="col-md-4 mb-2">
+        <div class="card bg-info text-white p-3 shadow-sm">
+            <h5>Số Dư Tiết Kiệm</h5>
+            <h4>{{ "{:,.0f}".format(total_savings) }} VNĐ</h4>
+        </div>
+    </div>
+</div>

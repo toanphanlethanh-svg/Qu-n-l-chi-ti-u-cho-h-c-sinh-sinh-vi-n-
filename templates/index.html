@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include "components/_overview.html" %}
+    {% include "components/_jars_config.html" %}
+    {% include "components/_charts.html" %}
+    {% include "components/_forms.html" %}
+
+    <h4 class="mb-3">Lịch Sử Giao Dịch</h4>
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Ngày</th>
+                <th>Loại</th>
+                <th>Danh mục</th>
+                <th>Hũ</th>
+                <th>Số tiền</th>
+                <th>Ghi chú</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in transactions %}
+            <tr>
+                <td>{{ t.date }}</td>
+                <td>
+                    <span class="badge {{ 'bg-success' if t.trans_type == 'Thu' else 'bg-danger' }}">
+                        {{ t.trans_type }}
+                    </span>
+                </td>
+                <td>{{ t.category }}</td>
+                <td>{{ t.jar }}</td>
+                <td>{{ "{:,.0f}".format(t.amount) }} VNĐ</td>
+                <td>{{ t.note }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Ép kiểu chuẩn giúp VS Code hiểu đúng cú pháp JS
+    const totalExpense = Number("{{ total_expense }}") || 0;
+    const monthlyBudget = Number("{{ monthly_budget }}") || 0;
+    const isOverBudget = ("{{ is_over_budget }}" === "True");
+
+    // Vẽ biểu đồ hạn mức
+    const ctxBudget = document.getElementById('budgetChart')?.getContext('2d');
+    if (ctxBudget) {
+        new Chart(ctxBudget, {
+            type: 'bar',
+            data: {
+                labels: ['Đã Chi Tiêu', 'Hạn Mức'],
+                datasets: [{
+                    data: [totalExpense, monthlyBudget],
+                    backgroundColor: [isOverBudget ? '#dc3545' : '#198754', '#6c757d']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+
+    // Vẽ biểu đồ tiến độ các Hũ
+    const jarBalances = JSON.parse('{{ jars_balance | tojson | safe }}');
+    const jarSpents = JSON.parse('{{ jars_spent | tojson | safe }}');
+    
+    const ctxBar = document.getElementById('jarsBarChart')?.getContext('2d');
+    if (ctxBar) {
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(jarBalances),
+                datasets: [
+                    { label: 'Còn lại', data: Object.values(jarBalances), backgroundColor: '#0d6efd' },
+                    { label: 'Đã chi', data: Object.values(jarSpents), backgroundColor: '#dc3545' }
+                ]
+            },
+            options: { responsive: true }
+        });
+    }
+</script>
+{% endblock %}
