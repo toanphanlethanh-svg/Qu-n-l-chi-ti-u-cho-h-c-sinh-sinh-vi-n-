@@ -16,6 +16,8 @@ def create_app():
 
     return app
 
+# Khởi tạo instance 'app' ở phạm vi toàn cục để Gunicorn (app:app) tìm thấy
+app = create_app()
+
 if __name__ == '__main__':
-    app = create_app()
     app.run(debug=True)
