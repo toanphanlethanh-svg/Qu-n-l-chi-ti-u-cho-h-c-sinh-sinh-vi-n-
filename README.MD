@@ -17,5 +17,5 @@
 
 ### 1. Tải dự án về máy
 ```bash
-git clone [https://github.com/toanphanlethanh-svg/Qu-n-l-chi-ti-u-cho-h-c-sinh-sinh-vi-n-.git](https://github.com/toanphanlethanh-svg/Qu-n-l-chi-ti-u-cho-h-c-sinh-sinh-vi-n-.git)
+git clone https://github.com/toanphanlethanh-svg/Qu-n-l-chi-ti-u-cho-h-c-sinh-sinh-vi-n-.git(https://github.com/toanphanlethanh-svg/Qu-n-l-chi-ti-u-cho-h-c-sinh-sinh-vi-n-.git)
 cd Qu-n-l-chi-ti-u-cho-h-c-sinh-sinh-vi-n-
