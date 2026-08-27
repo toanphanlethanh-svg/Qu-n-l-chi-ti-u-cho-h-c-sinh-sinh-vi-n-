@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from models import db, Transaction, JarSetting
+from models import db, Transaction, JarSetting, init_default_jars
 from excel_helper import process_excel_import
 from datetime import datetime
 
@@ -7,8 +7,14 @@ main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/')
 def index():
-    transactions = Transaction.query.order_by(Transaction.id.desc()).all()
     jar_settings = JarSetting.query.all()
+    
+    # Kiểm tra nếu cơ sở dữ liệu chưa có cài đặt Hũ, tự động khởi tạo 6 Hũ mặc định
+    if not jar_settings:
+        init_default_jars()
+        jar_settings = JarSetting.query.all()
+
+    transactions = Transaction.query.order_by(Transaction.id.desc()).all()
     
     # Hạn mức mặc định là 2,000,000 VNĐ
     monthly_budget = float(request.args.get('monthly_budget', 2000000))
